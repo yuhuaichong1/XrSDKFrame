@@ -9,8 +9,8 @@ using XrCode;
 
 public class GuideModule : BaseModule
 {
-    private int curStep;
-    private GuideItem curGuideItems;
+    private int curStep;//当前引导步骤
+    private GuideItem curGuideItems;//当前引导数据
 
     private bool ifTutorial;//是否处于引导状态
 
@@ -30,6 +30,9 @@ public class GuideModule : BaseModule
         GetData();
     }
 
+    /// <summary>
+    /// 获取引导数据
+    /// </summary>
     private void GetData()
     {
         ifTutorial = SPlayerPrefs.GetBool(PlayerPrefDefines.ifTutorial, true);    
@@ -41,10 +44,14 @@ public class GuideModule : BaseModule
             curStep = backStep != 0 ? backStep : curStep;
         }
 
-        SetGuide(curStep);
+        SetCurGuideItems(curStep);
     }
 
-    private void SetGuide(int step)
+    /// <summary>
+    /// 设置当前引导数据
+    /// </summary>
+    /// <param name="step">引导步骤</param>
+    private void SetCurGuideItems(int step)
     {
         curStep = step;
         ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
@@ -67,15 +74,26 @@ public class GuideModule : BaseModule
     }
 
     /// <summary>
+    /// 获取当前引导数据
+    /// </summary>
+    /// <returns>当前引导数据</returns>
+    private GuideItem GetCurGuideItems()
+    {
+        return curGuideItems;
+    }
+
+    /// <summary>
     /// 进入下一步引导（依据条件判断是否进入）
     /// </summary>
     private void NextStep()
     {
         if (curGuideItems.ifNextStep && !CheckGuideEnd())
         {
+            SetExtraEnd(curGuideItems.extraEnd);
+
             bool orginBool = curGuideItems.ifNextPlay;
             curStep = curGuideItems.nextStep;
-            SetGuide(curStep);
+            SetCurGuideItems(curStep);
             if (orginBool)
             {
                 FacadeGuide.PlayGuide();
@@ -101,7 +119,7 @@ public class GuideModule : BaseModule
     {
         curStep = curGuideItems.nextStep;
         CheckGuideEnd();
-        SetGuide(curStep);
+        SetCurGuideItems(curStep);
         SPlayerPrefs.SetInt(PlayerPrefDefines.curStep, curStep);
         SPlayerPrefs.Save();
     }
@@ -110,7 +128,7 @@ public class GuideModule : BaseModule
     /// 获取语言集合
     /// </summary>
     /// <param name="languageIds">语言id</param>
-    /// <returns></returns>
+    /// <returns>目标语言文本集合</returns>
     private List<string> GetLanguageContent(List<int> languageIds)
     {
         if (languageIds == null || languageIds.Count == 0) return null;
@@ -171,29 +189,34 @@ public class GuideModule : BaseModule
         return temp;
     }
 
-    private GuideItem GetCurGuideItems()
-    {
-        return curGuideItems;
-    }
-
+    /// <summary>
+    /// 得到当前引导步骤
+    /// </summary>
+    /// <returns>当前引导步骤</returns>
     private int GetCurStep()
     {
         return curStep;
     }
 
-    #region Get/Set
+    /// <summary>
+    /// 获取当前是否处于引导状态
+    /// </summary>
+    /// <returns>当前是否处于引导状态</returns>
     private bool GetIfTutorial()
     {
         return ifTutorial;
     }
+
+    /// <summary>
+    /// 设置当前是否处于引导状态
+    /// </summary>
+    /// <param name="b">当前是否处于引导状态</param>
     private void SetIfTutorial(bool b)
     {
         ifTutorial = b;
         SPlayerPrefs.SetBool(PlayerPrefDefines.ifTutorial, ifTutorial);
         SPlayerPrefs.Save();
     }
-    #endregion
-
 
     /// <summary>
     /// 检测引导是否结束
@@ -210,6 +233,23 @@ public class GuideModule : BaseModule
             SetIfTutorial(ifTutorial);
         }
         return isEnd;
+    }
+
+    /// <summary>
+    /// 激活引导结束时的回调
+    /// </summary>
+    /// <param name="extraData">回调数据类型</param>
+    private void SetExtraEnd(Dictionary<string, string> extraData)
+    {
+        foreach (KeyValuePair<string, string> kvp in extraData)
+        {
+            switch (kvp.Key)
+            {
+                case "cord":
+
+                    break;
+            }
+        }
     }
 
     protected override void OnDispose()

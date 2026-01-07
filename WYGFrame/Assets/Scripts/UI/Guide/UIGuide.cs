@@ -8,10 +8,7 @@ namespace XrCode
 
     public partial class UIGuide : BaseUI
     {
-        private Action clickAction;
         private TDAnalyticsManager TDAnalyticsManager;
-
-        private Dictionary<string, RectTransform> posTrans;
 
         private List<Transform> diglogs;
         private List<Transform> hands;
@@ -22,22 +19,26 @@ namespace XrCode
         {
             TDAnalyticsManager = ModuleMgr.Instance.TDAnalyticsManager;
 
-            mGuidePlane.gameObject.SetActive(false);
-
             FacadeGuide.PlayGuide += PlayGuide;
             FacadeGuide.CloseGuide += CloseGuide;
+
+            mGuidePlane.gameObject.SetActive(false);
+            diglogs = new List<Transform>();
+            mGuideText.gameObject.SetActive(false);
+            hands = new List<Transform>();
+            mHander.gameObject.SetActive(false);
+            transparents = new List<Transform>();
+            mHole.gameObject.SetActive(false);
+            clicks = new List<Transform>();
         }
         protected override void OnEnable()
         {
 
         }
 
-        //引导按钮回调
-        private void OnGuideBtnClickHandle()
-        {
-            clickAction?.Invoke();
-        }
-
+        /// <summary>
+        /// 设置当前引导
+        /// </summary>
         private void SetGuideShow()
         {
             GuideItem info = FacadeGuide.GetCurGuideItems();
@@ -90,7 +91,7 @@ namespace XrCode
             }
 
             if (info.extraStart != null && info.extraStart.Count != 0)
-                SetExtraShow(info.extraStart);
+                SetExtraStart(info.extraStart);
         }
 
         /// <summary>
@@ -107,7 +108,6 @@ namespace XrCode
                 {
                     tempTran = diglogs[i];
                     tempTran.gameObject.SetActive(true);
-                    Debug.LogError("111");
                 }
                 else
                 {
@@ -115,7 +115,6 @@ namespace XrCode
                     obj.gameObject.SetActive(true);
                     tempTran = obj.GetComponent<Transform>();
                     diglogs.Add(tempTran);
-                    Debug.LogError("222");
                 }
 
                 tempTran.position = newTarget[i].position;
@@ -175,7 +174,11 @@ namespace XrCode
             }
         }
 
-        private void SetExtraShow(Dictionary<string, string> extraData)
+        /// <summary>
+        /// 激活引导开始时的回调
+        /// </summary>
+        /// <param name="extraData">回调数据类型</param>
+        private void SetExtraStart(Dictionary<string, string> extraData)
         {
             foreach (KeyValuePair<string, string> kvp in extraData)
             {
@@ -195,6 +198,7 @@ namespace XrCode
         {
             if (!FacadeGuide.GetIfTutorial())
                 return;
+
             //TDAnalyticsManager.GuideStep(FacadeGuide.GetCurStep());
 
             mGuidePlane.gameObject.SetActive(true);
@@ -233,6 +237,17 @@ namespace XrCode
         }
 
         protected override void OnDisable() { }
-        protected override void OnDispose() { }
+        protected override void OnDispose()
+        {
+            TDAnalyticsManager = null;
+
+            FacadeGuide.PlayGuide -= PlayGuide;
+            FacadeGuide.CloseGuide -= CloseGuide;
+
+            diglogs = null;
+            hands = null;
+            transparents = null;
+            clicks = null;
+        }
     }
 }
