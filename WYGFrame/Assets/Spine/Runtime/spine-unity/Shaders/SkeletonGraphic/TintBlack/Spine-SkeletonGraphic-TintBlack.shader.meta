@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: f64c7bc238bb2c246b8ca1912b2b6b9c
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/skeletongraphic/tintblack/spine-skeletongraphic-tintblack.shader.assetbundle
+  assetBundleVariant: 

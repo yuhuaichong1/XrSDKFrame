@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 4f1fdc166fed03649835949d3b79cba3
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/outline/spine-skeleton-tint-outline.shader.assetbundle
+  assetBundleVariant: 

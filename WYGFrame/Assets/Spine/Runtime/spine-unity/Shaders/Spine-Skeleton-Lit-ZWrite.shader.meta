@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: fde05abf1f7be4b4da1caf8c8de1823a
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/spine-skeleton-lit-zwrite.shader.assetbundle
+  assetBundleVariant: 

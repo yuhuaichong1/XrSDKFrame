@@ -1,0 +1,12 @@
+touch.png
+size:91,91
+filter:Linear,Linear
+glow
+bounds:2,2,36,36
+offsets:2,2,40,40
+lizi
+bounds:54,69,20,20
+offsets:4,4,28,28
+star
+bounds:2,40,50,49
+offsets:0,1,50,50

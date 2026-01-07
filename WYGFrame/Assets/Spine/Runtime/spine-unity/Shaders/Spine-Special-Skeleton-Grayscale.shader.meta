@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: ea7e7c05f36541b4bb280f98ebda8ba1
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/spine-special-skeleton-grayscale.shader.assetbundle
+  assetBundleVariant: 

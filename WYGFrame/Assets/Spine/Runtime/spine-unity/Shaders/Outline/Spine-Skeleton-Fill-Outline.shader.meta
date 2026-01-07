@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: e158cbe58baa093438feb3d691f3daba
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/outline/spine-skeleton-fill-outline.shader.assetbundle
+  assetBundleVariant: 

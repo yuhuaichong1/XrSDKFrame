@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 66988de88a15abd4e8846c6805485f57
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/utility/hidden-spine-bones.shader.assetbundle
+  assetBundleVariant: 

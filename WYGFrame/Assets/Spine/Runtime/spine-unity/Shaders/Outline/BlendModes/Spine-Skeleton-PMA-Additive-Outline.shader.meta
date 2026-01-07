@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 0299ffae826705448b6c80ccc6a53b75
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/outline/blendmodes/spine-skeleton-pma-additive-outline.shader.assetbundle
+  assetBundleVariant: 

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 30ef5dd318033004588a6481c092416a
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/outline/sprite/spritesvertexlit-outline.shader.assetbundle
+  assetBundleVariant: 

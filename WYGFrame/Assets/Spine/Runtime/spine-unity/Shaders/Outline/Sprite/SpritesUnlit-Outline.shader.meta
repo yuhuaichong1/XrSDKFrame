@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 276c07e3bdd5719458187a5823e9d96a
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/outline/sprite/spritesunlit-outline.shader.assetbundle
+  assetBundleVariant: 

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 49cf725a1e40e7742be92917f83946c3
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/outline/spine-skeleton-tintblack-outline.shader.assetbundle
+  assetBundleVariant: 

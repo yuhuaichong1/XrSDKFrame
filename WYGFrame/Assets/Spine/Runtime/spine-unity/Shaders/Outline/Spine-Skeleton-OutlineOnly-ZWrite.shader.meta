@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 177da18c3d2e0aa4cb39990ea011973c
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/outline/spine-skeleton-outlineonly-zwrite.shader.assetbundle
+  assetBundleVariant: 

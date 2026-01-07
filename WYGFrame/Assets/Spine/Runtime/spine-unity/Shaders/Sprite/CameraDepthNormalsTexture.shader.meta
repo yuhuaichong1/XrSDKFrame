@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 4794ea6b2d07cc546ba97a809b5f9ada
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/sprite/cameradepthnormalstexture.shader.assetbundle
+  assetBundleVariant: 

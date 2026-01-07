@@ -1,0 +1,7 @@
+fileFormatVersion: 2
+guid: 27351ce55d3beb643ae8d9385db21941
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/cgincludes/spine-depthonlypass.cginc.assetbundle
+  assetBundleVariant: 

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: bd83c75f51f5e23498ae22ffcdfe92c3
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: assets/assetbundlelocal/spine/runtime/spine-unity/shaders/spine-skeleton-lit.shader.assetbundle
+  assetBundleVariant: 
