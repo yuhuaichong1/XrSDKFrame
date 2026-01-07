@@ -360,6 +360,7 @@ public class AABBuildCheck : Editor, IPreprocessBuildWithReport
 
     public void ShowOtherMsg()
     {
+        Debug.LogError("--------------打包信息--------------");
         Debug.LogError($"URL：{curURL}");
         Debug.LogError($"CompanyName：{PlayerSettings.companyName}");
         Debug.LogError($"ProductName：{PlayerSettings.productName}");
