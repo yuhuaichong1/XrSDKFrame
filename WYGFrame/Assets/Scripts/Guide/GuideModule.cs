@@ -56,13 +56,14 @@ public class GuideModule : BaseModule
         curGuideItems.ifNextStep = guideData.IfNextStep;
         curGuideItems.ifNextPlay = guideData.IfNextPlay;
         curGuideItems.autohiddenTime = guideData.AutohiddenTime;
-        curGuideItems.diglogContent = FacadeLanguage.GetText(guideData.DiglogContentId.ToString());
+        curGuideItems.diglogContent = GetLanguageContent(guideData.DiglogContentId);
         curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
         curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
         curGuideItems.ifMask = guideData.IfMask;
         curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
         curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
-        curGuideItems.extra = guideData.Extra;
+        curGuideItems.extraStart = guideData.ExtraStart;
+        curGuideItems.extraEnd = guideData.ExtraEnd;
     }
 
     /// <summary>
@@ -106,16 +107,40 @@ public class GuideModule : BaseModule
     }
 
     /// <summary>
+    /// 获取语言集合
+    /// </summary>
+    /// <param name="languageIds">语言id</param>
+    /// <returns></returns>
+    private List<string> GetLanguageContent(List<int> languageIds)
+    {
+        if (languageIds == null || languageIds.Count == 0) return null;
+
+        List<string> temp = new List<string>();
+        foreach (int languageId in languageIds)
+        {
+            temp.Add(FacadeLanguage.GetText(languageId.ToString()));
+        }
+
+        return temp;
+    }
+
+    /// <summary>
     /// 获取UI路径
     /// </summary>
     /// <param name="pathData">路径的str数据</param>
     /// <returns>目标UI</returns>
-    private string GetUIRectTrans(string pathData)
+    private List<string> GetUIRectTrans(List<string> pathData)
     {
-        if (pathData == "") return null;
-        string[] diglongPosStr = pathData.Split(',');
-        string path = UIManager.Instance.GetUIPath(diglongPosStr);
-        return path;
+        if (pathData == null || pathData.Count == 0) return null;
+
+        List<string> temp = new List<string>();
+        foreach (string item in pathData)
+        {
+            string[] diglongPosStr = item.Split(',');
+            string path = UIManager.Instance.GetUIPath(diglongPosStr);
+            temp.Add(path);
+        }
+        return temp;
     }
 
     /// <summary>
@@ -124,26 +149,26 @@ public class GuideModule : BaseModule
     /// <param name="pathData">路径（可能是其他类型）</param>
     /// <param name="item">当前引导项目</param>
     /// <returns>目标路径</returns>
-    private List<string> GetClickRectTrans(string pathData)
+    private List<string> GetClickRectTrans(List<string> pathData)
     {
-        List<string> paths = new List<string>();
-        string[] temp = pathData.Split(';');
-        foreach(string value in temp) 
+        List<string> temp = new List<string>();
+        for (int i = 0; i < pathData.Count; i++)
         {
-            switch (value)
+            switch (pathData[i])
             {
                 case "handPos":
-                    paths.Add(curGuideItems.handPos);
+                    temp.Add(curGuideItems.handPos[i]);
                     break;
                 case "transparentPos":
-                    paths.Add(curGuideItems.transparentPos);
+                    temp.Add(curGuideItems.transparentPos[i]);
                     break;
                 default:
-                    paths.Add(GetUIRectTrans(value));
+                    temp.Add(GetUIRectTrans(new List<string>() { pathData[i] })[0]);
                     break;
             }
         }
-        return paths;
+
+        return temp;
     }
 
     private GuideItem GetCurGuideItems()

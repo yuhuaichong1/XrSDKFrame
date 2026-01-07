@@ -26,13 +26,14 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         IfNextStep = _buf.ReadBool();
         IfNextPlay = _buf.ReadBool();
         AutohiddenTime = _buf.ReadFloat();
-        DiglogContentId = _buf.ReadInt();
-        DiglogPos = _buf.ReadString();
-        HandPos = _buf.ReadString();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DiglogContentId = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); DiglogContentId.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);DiglogPos = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); DiglogPos.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);HandPos = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); HandPos.Add(_e0);}}
         IfMask = _buf.ReadBool();
-        TransparentPos = _buf.ReadString();
-        ClickPos = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Extra = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     Extra.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TransparentPos = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); TransparentPos.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ClickPos = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ClickPos.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ExtraStart = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     ExtraStart.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ExtraEnd = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     ExtraEnd.Add(_k0, _v0);}}
         PostInit();
     }
 
@@ -76,15 +77,15 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// <summary>
     /// 提示框内容（对应Language表）
     /// </summary>
-    public int DiglogContentId { get; protected set; }
+    public System.Collections.Generic.List<int> DiglogContentId { get; protected set; }
     /// <summary>
     /// 提示框位置
     /// </summary>
-    public string DiglogPos { get; protected set; }
+    public System.Collections.Generic.List<string> DiglogPos { get; protected set; }
     /// <summary>
     /// 手位置
     /// </summary>
-    public string HandPos { get; protected set; }
+    public System.Collections.Generic.List<string> HandPos { get; protected set; }
     /// <summary>
     /// 是否有黑色遮罩
     /// </summary>
@@ -92,15 +93,19 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// <summary>
     /// 透明框位置
     /// </summary>
-    public string TransparentPos { get; protected set; }
+    public System.Collections.Generic.List<string> TransparentPos { get; protected set; }
     /// <summary>
     /// 教程可点击部分
     /// </summary>
-    public string ClickPos { get; protected set; }
+    public System.Collections.Generic.List<string> ClickPos { get; protected set; }
     /// <summary>
-    /// 额外字段
+    /// 开始引导时的额外字段
     /// </summary>
-    public System.Collections.Generic.Dictionary<string, string> Extra { get; protected set; }
+    public System.Collections.Generic.Dictionary<string, string> ExtraStart { get; protected set; }
+    /// <summary>
+    /// 结束引导时的额外字段
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, string> ExtraEnd { get; protected set; }
 
     public const int __ID__ = 1865134427;
     public override int GetTypeId() => __ID__;
@@ -124,32 +129,105 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         IfNextStep = reloadData.IfNextStep;
         IfNextPlay = reloadData.IfNextPlay;
         AutohiddenTime = reloadData.AutohiddenTime;
-        DiglogContentId = reloadData.DiglogContentId;
-        DiglogPos = reloadData.DiglogPos;
-        HandPos = reloadData.HandPos;
-        IfMask = reloadData.IfMask;
-        TransparentPos = reloadData.TransparentPos;
-        ClickPos = reloadData.ClickPos;
-        if(Extra==null)
+        if(DiglogContentId==null)
         {
-            Extra = reloadData.Extra;
+            DiglogContentId = reloadData.DiglogContentId;
         }else
         {
-            foreach (var rawDataKey in Extra.Keys.ToList())
+            DiglogContentId.Capacity = reloadData.DiglogContentId.Count;
+            for (int i = 0; i < reloadData.DiglogContentId.Count; i++)
             {
-                if(!reloadData.Extra.ContainsKey(rawDataKey))
+                DiglogContentId[i] = reloadData.DiglogContentId[i];
+            }
+        }
+        if(DiglogPos==null)
+        {
+            DiglogPos = reloadData.DiglogPos;
+        }else
+        {
+            DiglogPos.Capacity = reloadData.DiglogPos.Count;
+            for (int i = 0; i < reloadData.DiglogPos.Count; i++)
+            {
+                DiglogPos[i] = reloadData.DiglogPos[i];
+            }
+        }
+        if(HandPos==null)
+        {
+            HandPos = reloadData.HandPos;
+        }else
+        {
+            HandPos.Capacity = reloadData.HandPos.Count;
+            for (int i = 0; i < reloadData.HandPos.Count; i++)
+            {
+                HandPos[i] = reloadData.HandPos[i];
+            }
+        }
+        IfMask = reloadData.IfMask;
+        if(TransparentPos==null)
+        {
+            TransparentPos = reloadData.TransparentPos;
+        }else
+        {
+            TransparentPos.Capacity = reloadData.TransparentPos.Count;
+            for (int i = 0; i < reloadData.TransparentPos.Count; i++)
+            {
+                TransparentPos[i] = reloadData.TransparentPos[i];
+            }
+        }
+        if(ClickPos==null)
+        {
+            ClickPos = reloadData.ClickPos;
+        }else
+        {
+            ClickPos.Capacity = reloadData.ClickPos.Count;
+            for (int i = 0; i < reloadData.ClickPos.Count; i++)
+            {
+                ClickPos[i] = reloadData.ClickPos[i];
+            }
+        }
+        if(ExtraStart==null)
+        {
+            ExtraStart = reloadData.ExtraStart;
+        }else
+        {
+            foreach (var rawDataKey in ExtraStart.Keys.ToList())
+            {
+                if(!reloadData.ExtraStart.ContainsKey(rawDataKey))
                 {
-                    Extra.Remove(rawDataKey);
+                    ExtraStart.Remove(rawDataKey);
                 }
             }
-            foreach (var reload in reloadData.Extra)
+            foreach (var reload in reloadData.ExtraStart)
             {
-                if(Extra.ContainsKey(reload.Key))
+                if(ExtraStart.ContainsKey(reload.Key))
                 {
-                    Extra[reload.Key] = reload.Value;
+                    ExtraStart[reload.Key] = reload.Value;
                 }else
                 {
-                    Extra.Add(reload.Key,reload.Value);
+                    ExtraStart.Add(reload.Key,reload.Value);
+                }
+            }
+        }
+        if(ExtraEnd==null)
+        {
+            ExtraEnd = reloadData.ExtraEnd;
+        }else
+        {
+            foreach (var rawDataKey in ExtraEnd.Keys.ToList())
+            {
+                if(!reloadData.ExtraEnd.ContainsKey(rawDataKey))
+                {
+                    ExtraEnd.Remove(rawDataKey);
+                }
+            }
+            foreach (var reload in reloadData.ExtraEnd)
+            {
+                if(ExtraEnd.ContainsKey(reload.Key))
+                {
+                    ExtraEnd[reload.Key] = reload.Value;
+                }else
+                {
+                    ExtraEnd.Add(reload.Key,reload.Value);
                 }
             }
         }
@@ -166,13 +244,14 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         + "IfNextStep:" + IfNextStep + ","
         + "IfNextPlay:" + IfNextPlay + ","
         + "AutohiddenTime:" + AutohiddenTime + ","
-        + "DiglogContentId:" + DiglogContentId + ","
-        + "DiglogPos:" + DiglogPos + ","
-        + "HandPos:" + HandPos + ","
+        + "DiglogContentId:" + Bright.Common.StringUtil.CollectionToString(DiglogContentId) + ","
+        + "DiglogPos:" + Bright.Common.StringUtil.CollectionToString(DiglogPos) + ","
+        + "HandPos:" + Bright.Common.StringUtil.CollectionToString(HandPos) + ","
         + "IfMask:" + IfMask + ","
-        + "TransparentPos:" + TransparentPos + ","
-        + "ClickPos:" + ClickPos + ","
-        + "Extra:" + Bright.Common.StringUtil.CollectionToString(Extra) + ","
+        + "TransparentPos:" + Bright.Common.StringUtil.CollectionToString(TransparentPos) + ","
+        + "ClickPos:" + Bright.Common.StringUtil.CollectionToString(ClickPos) + ","
+        + "ExtraStart:" + Bright.Common.StringUtil.CollectionToString(ExtraStart) + ","
+        + "ExtraEnd:" + Bright.Common.StringUtil.CollectionToString(ExtraEnd) + ","
         + "}";
     }
     

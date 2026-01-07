@@ -13,6 +13,11 @@ namespace XrCode
 
         private Dictionary<string, RectTransform> posTrans;
 
+        private List<Transform> diglogs;
+        private List<Transform> hands;
+        private List<Transform> transparents;
+        private List<Transform> clicks;
+
         protected override void OnAwake()
         {
             TDAnalyticsManager = ModuleMgr.Instance.TDAnalyticsManager;
@@ -39,29 +44,25 @@ namespace XrCode
             bool ifshow;
 
             ifshow = info.diglogPos != null;
-            mGuideTextBg.gameObject.SetActive(ifshow);
+            mGuideTextFather.gameObject.SetActive(ifshow);
             if (ifshow)
             {
-                mGuideText.text = info.diglogContent;
-                mGuideTextBg.transform.position = FindTrans(info.diglogPos).position;
+                SetDialog(FindTrans(info.diglogPos), info.diglogContent);
             }
 
             ifshow = info.handPos != null;
-            mHander.gameObject.SetActive(ifshow);
+            mHandFather.gameObject.SetActive(ifshow);
             if (ifshow)
             {
-                mHander.transform.position = FindTrans(info.handPos).position;
-                mHand.Reset();
+                SetHander(FindTrans(info.handPos));
             }
 
             mHoleMask.alpha = info.ifMask ? 1 : 0;
 
             ifshow = info.transparentPos != null;
-            mHole.gameObject.SetActive(ifshow);
             if (ifshow)
             {
-                mHole.transform.position = FindTrans(info.transparentPos).position;
-                mHole.sizeDelta = FindTrans(info.transparentPos).GetComponent<RectTransform>().sizeDelta;
+                SetHole(FindTrans(info.transparentPos));
             }
 
             float autoHiddenTime = info.autohiddenTime;
@@ -78,16 +79,100 @@ namespace XrCode
                 mMask.penetrateObjs.Clear();
                 if (ifshow)
                 {
-                    foreach(string str in info.clickPos)
+                    List<Transform> transPath = FindTrans(info.clickPos);
+                    foreach (Transform tran in transPath)
                     {
-                        mMask.penetrateObjs.Add(FindTrans(str).GetComponent<RectTransform>());
+                        mMask.penetrateObjs.Add(tran.GetComponent<RectTransform>());
                     }
+
                     mMask.ifNext = info.ifNextPlay;
                 }
             }
 
-            if (info.extra != null && info.extra.Count != 0)
-                SetExtraShow(info.extra);
+            if (info.extraStart != null && info.extraStart.Count != 0)
+                SetExtraShow(info.extraStart);
+        }
+
+        /// <summary>
+        /// 设置提示框
+        /// </summary>
+        /// <param name="newTarget">新的目标</param>
+        /// <param name="newContent">新的内容</param>
+        private void SetDialog(List<Transform> newTarget, List<string> newContent)
+        {
+            for (int i = 0; i < newTarget.Count; i++)
+            {
+                Transform tempTran;
+                if (i < diglogs.Count)
+                {
+                    tempTran = diglogs[i];
+                    tempTran.gameObject.SetActive(true);
+                    Debug.LogError("111");
+                }
+                else
+                {
+                    GameObject obj = GameObject.Instantiate(mGuideText.gameObject, mGuideTextFather);
+                    obj.gameObject.SetActive(true);
+                    tempTran = obj.GetComponent<Transform>();
+                    diglogs.Add(tempTran);
+                    Debug.LogError("222");
+                }
+
+                tempTran.position = newTarget[i].position;
+                tempTran.GetComponent<RectTransform>().sizeDelta = newTarget[i].GetComponent<RectTransform>().sizeDelta;
+                tempTran.GetChild(1).GetComponent<Text>().text = newContent[i];
+            }
+        }
+
+        /// <summary>
+        /// 设置手位置
+        /// </summary>
+        /// <param name="newTarget"></param>
+        private void SetHander(List<Transform> newTarget)
+        {
+            for (int i = 0; i < newTarget.Count; i++)
+            {
+                Transform tempTran;
+                if (i < hands.Count)
+                {
+                    tempTran = hands[i];
+                    tempTran.gameObject.SetActive(true);
+                }
+                else
+                {
+                    GameObject obj = GameObject.Instantiate(mHander.gameObject, mHandFather);
+                    obj.gameObject.SetActive(true);
+                    tempTran = obj.GetComponent<Transform>();
+                    hands.Add(tempTran);
+                }
+
+                tempTran.position = newTarget[i].position;
+                tempTran.GetComponent<RectTransform>().sizeDelta = newTarget[i].GetComponent<RectTransform>().sizeDelta;
+                tempTran.GetChild(0).GetComponent<AutoHandSwing>().Reset();
+            }
+        }
+
+        private void SetHole(List<Transform> newTarget)
+        {
+            for (int i = 0; i < newTarget.Count; i++)
+            {
+                Transform tempTran;
+                if (i < transparents.Count)
+                {
+                    tempTran = transparents[i];
+                    tempTran.gameObject.SetActive(true);
+                }
+                else
+                {
+                    GameObject obj = GameObject.Instantiate(mHole.gameObject, mHoleFather);
+                    obj.gameObject.SetActive(true);
+                    tempTran = obj.GetComponent<Transform>();
+                    transparents.Add(tempTran);
+                }
+
+                tempTran.position = newTarget[i].position;
+                tempTran.GetComponent<RectTransform>().sizeDelta = newTarget[i].GetComponent<RectTransform>().sizeDelta;
+            }
         }
 
         private void SetExtraShow(Dictionary<string, string> extraData)
@@ -113,7 +198,21 @@ namespace XrCode
             //TDAnalyticsManager.GuideStep(FacadeGuide.GetCurStep());
 
             mGuidePlane.gameObject.SetActive(true);
-            
+
+            foreach (Transform objTrans in diglogs)
+            {
+                objTrans.gameObject.SetActive(false);
+            }
+            foreach (Transform objTrans in hands)
+            {
+                objTrans.gameObject.SetActive(false);
+            }
+            foreach (Transform objTrans in transparents)
+            {
+                objTrans.gameObject.SetActive(false);
+            }
+            clicks.Clear();
+
             SetGuideShow();
         }
 
@@ -122,9 +221,15 @@ namespace XrCode
             mGuidePlane.gameObject.SetActive(false);
         }
 
-        private Transform FindTrans(string path)
+        private List<Transform> FindTrans(List<string> paths)
         {
-            return GameObject.Find(path).transform;
+            List<Transform> trans = new List<Transform>();
+            foreach (string path in paths)
+            {
+                trans.Add(GameObject.Find(path).transform);
+            }
+
+            return trans;
         }
 
         protected override void OnDisable() { }

@@ -113,11 +113,7 @@ namespace cfg
             }
             string configName = configNames.Dequeue();
             System.Action<ByteBuf> cb = configCbFuncs.Dequeue();
-#if UNITY_ANDROID || UNITY_EDITOR || UNITY_WEBGL
-			Game.Instance.StartCoroutine(WebLoad(configName, cb,LoadAllConfig));
-#elif UNITY_IOS
-			Game.Instance.StartCoroutine(IOSWebLoad(configName, cb,LoadAllConfig));
-#endif
+            Game.Instance.StartCoroutine(WebLoad(configName, cb,LoadAllConfig));
         }
 
         public IEnumerator WebLoad(string fileName, System.Action<ByteBuf> confInst, System.Action cb)
@@ -144,30 +140,7 @@ namespace cfg
             }
         }
 
-        public IEnumerator IOSWebLoad(string fileName, System.Action<ByteBuf> confInst, System.Action cb)
-        {
-            string relativePath = Path.Combine("Data", $"{fileName}.bytes");
-            string url = Path.Combine(Application.streamingAssetsPath, relativePath);
-            url = "file://" + url;
-
-            UnityWebRequest request = UnityWebRequest.Get(url);
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                confInst(new ByteBuf(request.downloadHandler.data));
-                cb?.Invoke();
-                Debug.LogError($"[ConfPath]:Load config {fileName} success, size: {request.downloadHandler.data.Length}");
-            }
-            else
-            {
-                Debug.LogError($"[ConfPath]:UnityWebRequest Load fail: {request.result}, Error: {request.error}, URL: {url}");
-            }
-        }
-
-        public void TranslateText(System.Func<string, string, string> translator)
+		public void TranslateText(System.Func<string, string, string> translator)
 		{
 			TbUIRes.TranslateText(translator); 
 			TbLanguage.TranslateText(translator); 
