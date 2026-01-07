@@ -4,8 +4,8 @@ Temp
 UserSettings
 .vs
 AssetBundles
-XrSDKFrame/XrSDKFrame.sln
+WYGFrame/WYGFrame.sln
 obj
-XrSDKFrame/spine-csharp.csproj
-XrSDKFrame/spine-unity.csproj
-XrSDKFrame/spine-unity-editor.csproj
+WYGFrame/spine-csharp.csproj
+WYGFrame/spine-unity.csproj
+WYGFrame/spine-unity-editor.csproj
