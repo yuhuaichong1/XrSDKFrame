@@ -1,0 +1,11 @@
+Library
+Logs
+Temp
+UserSettings
+.vs
+AssetBundles
+XrSDKFrame/XrSDKFrame.sln
+obj
+XrSDKFrame/spine-csharp.csproj
+XrSDKFrame/spine-unity.csproj
+XrSDKFrame/spine-unity-editor.csproj
